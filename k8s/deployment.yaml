@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: farmlokal-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: farmlokal-backend
+  template:
+    metadata:
+      labels:
+        app: farmlokal-backend
+    spec:
+      containers:
+        - name: api
+          image: your-docker-repo/farmlokal-backend:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: PORT
+              value: "8080"
+            - name: MYSQL_HOST
+              value: "mysql"
+            - name: MYSQL_PORT
+              value: "3306"
+            - name: MYSQL_USER
+              value: "root"
+            - name: MYSQL_PASSWORD
+              value: "secret"
+            - name: MYSQL_DATABASE
+              value: "farmlokal"
+            - name: REDIS_URL
+              value: "redis://redis:6379"
+            - name: OAUTH_TOKEN_URL
+              value: "https://oauth.example.com/token"
+            - name: OAUTH_CLIENT_ID
+              value: "your_client_id"
+            - name: OAUTH_CLIENT_SECRET
+              value: "your_client_secret"
+            - name: OAUTH_SCOPE
+              value: "read:products"
+            - name: EXTERNAL_SYNC_BASE_URL
+              value: "https://api.example.com"
+            - name: EXTERNAL_WEBHOOK_SECRET
+              value: "replace_me"
+            - name: CACHE_TTL_SECONDS
+              value: "60"
+            - name: RATE_LIMIT_RPS
+              value: "20"
+            - name: RATE_LIMIT_BURST
+              value: "40"
+            - name: CIRCUIT_BREAKER_FAILURES
+              value: "5"
+            - name: CIRCUIT_BREAKER_WINDOW_SECONDS
+              value: "30"
+            - name: CIRCUIT_BREAKER_COOLDOWN_SECONDS
+              value: "30"
